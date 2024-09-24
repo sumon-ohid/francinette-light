@@ -7,16 +7,6 @@ mkdir temp_____
 cd temp_____ || exit
 rm -rf francinette
 
-# check if francinette is already installed
-if [[ -d "$HOME/francinette" ]]; then
-	echo "Francinette is already installed. Do you want to reinstall it? (y/n)"
-	read -r REINSTALL
-	if [[ "$REINSTALL" == "n" ]]; then
-		echo "Exiting..."
-		exit 0
-	fi
-fi
-
 # download github
 git clone --recursive https://github.com/xicodomingues/francinette.git
 
@@ -92,5 +82,3 @@ fi
 exec "$SHELL"
 
 printf "\033[33m... and don't forget, \033[1;37mpaco\033[0;33m is not a replacement for your own tests! \033[0m\n"
-
-exec "$@"

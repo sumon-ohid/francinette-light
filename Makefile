@@ -1,8 +1,18 @@
-DATA_DIR = /home/${USER}/sgoinfre/${USER}/francinette-light
 
-build:
+DATA_DIR = /home/${USER}/sgoinfre/${USER}/francinette-light
+DOCKER-COMPOSE = docker-compose -f docker-compose.yml
+USERNAME = $(shell whoami)
+
+all: build up 
+
+env:
+	@echo "Setting up environment..."
+	@echo "DATA_DIR=${DATA_DIR}" > .env
+	@echo "USERNAME=${USERNAME}" >> .env
+
+build: env
 	@echo "Building francinette light..."
-	docker build -t francinette-light .
+	$(DOCKER-COMPOSE) build
 
 up:
 	@echo "Starting francinette light..."
@@ -10,20 +20,19 @@ up:
 		echo "Error: DATA_DIR is not set"; \
 		exit 1; \
 	fi
-	docker run -d --name francinette-light -v ${DATA_DIR}:/data francinette-light
+	$(DOCKER-COMPOSE) up -d
 
 down:
 	@echo "Stopping francinette light..."
-	docker stop francinette-light || true
+	$(DOCKER-COMPOSE) down --rmi all
 
 logs:
 	@echo "Showing logs..."
-	docker logs -f francinette-light
+	$(DOCKER-COMPOSE) logs -f
 
 clean: down
 	@echo "Removing francinette light..."
-	docker rm francinette-light || true
-	docker rmi francinette-light || true
+	${DOCKER_COMPOSE} down -v --rmi all --remove-orphans || true
 
 fclean: clean
 	@echo "Removing all stopped containers..."
@@ -31,7 +40,11 @@ fclean: clean
 
 shell:
 	@echo "Starting shell..."
-	docker run -it --rm francinette-light /bin/zsh
+	docker exec -it francinette-light zsh
+
+uninstall:
+	@echo "Uninstalling francinette light..."
+	rm -rf ${DATA_DIR}
 
 re: fclean build up
 

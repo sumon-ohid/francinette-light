@@ -34,12 +34,9 @@ RUN pipx install norminette && \
 RUN mkdir -p /francinette
 COPY libft /home/libft
 
-COPY install.sh /francinette/install.sh
-RUN chmod +x /francinette/install.sh
+COPY install.sh /francinette/bin/install.sh
 
-# Add alias for francinette in /root/.bashrc
-#RUN echo "alias francinette='/francinette/install.sh'" >> /root/.bashrc
+RUN chmod +x /francinette/bin/install.sh
 
-ENTRYPOINT [ "zsh", "-c", "/francinette/install.sh" ]
-
-CMD [ "/bin/zsh", "-l" ]
+# Keep the container running
+ENTRYPOINT [ "sh", "-c", "/francinette/bin/install.sh && exec sh" ]
