@@ -1,42 +1,24 @@
-FROM debian:latest
+FROM ubuntu:22.04
+
+LABEL maintainer="mmorot@student.42lyon.fr"
+LABEL version="1.0.3"
+LABEL description="francinette image 42"
+
 
 RUN apt update -y
 RUN apt install git -y
-RUN apt install zsh -y
-
-# Set zsh as the default shell for the Docker container
-RUN ln -sf /bin/zsh /bin/sh
-
-RUN mkdir -p /home/libft
-WORKDIR /home/libft
-
-RUN apt update -y && \
-    apt upgrade -y && \
-    apt install -y \
-        libbsd-dev \
-        python3 \
-        python3-pip \
-        python3-venv \
-        python3-dev \
-        python3-setuptools \
-        python3-wheel \
-        pipx \
-        clang \
-        valgrind \
-        gcc \
-        lsb-release && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN pipx install norminette && \
-    pipx ensurepath
-
-RUN mkdir -p /francinette
-COPY libft /home/libft
-
-COPY install.sh /francinette/bin/install.sh
-
-RUN chmod +x /francinette/bin/install.sh
-
-# Keep the container running
-ENTRYPOINT [ "sh", "-c", "/francinette/bin/install.sh && exec sh" ]
+WORKDIR /
+RUN git clone --recursive https://github.com/xicodomingues/francinette.git
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install gcc clang libpq-dev libbsd-dev libncurses-dev valgrind build-essential nasm clang ghc cmake make libxext-dev libbsd-dev libpq-dev -y
+RUN apt install python3-dev python3-pip -y
+RUN apt install python3-dev python3-venv python3-wheel -y
+RUN pip3 install wheel
+RUN python3 -m venv venv
+RUN . venv/bin/activate
+WORKDIR /francinette
+RUN pip3 install -r requirements.txt
+RUN pip3 install norminette
+RUN chmod 777 tester.sh
+CMD ["/francinette/tester.sh"]

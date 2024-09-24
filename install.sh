@@ -1,84 +1,34 @@
 #!/bin/bash
+WHITE='\033[0;37m' 
+BLUE='\033[0;36m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+BWhite='\033[1;37m' 
+NC='\033[0m'
 
-cd "$HOME" || exit
-
-mkdir temp_____
-
-cd temp_____ || exit
-rm -rf francinette
-
-# download github
-git clone --recursive https://github.com/xicodomingues/francinette.git
-
-if [ "$(uname)" != "Darwin" ]; then
-	echo "Admin permissions needed to install C compilers, python, and upgrade current packages"
-	case $(lsb_release -is) in
-		"Ubuntu")
-			sudo apt update
-			sudo apt upgrade
-			sudo apt install gcc clang libpq-dev libbsd-dev libncurses-dev valgrind -y
-			sudo apt install python-dev python3-pip -y
-			sudo apt install python3-dev python3-venv python3-wheel -y
-			pip3 install wheel
-			;;
-		"Arch")
-			sudo pacman -Syu
-			sudo pacman -S gcc clang postgresql libbsd ncurses valgrind --noconfirm
-			sudo pacman -S python-pip --noconfirm
-			pip3 install wheel
-			;;
-	esac
+USER = $(whoami)
+francinette_data = /home/${USER}/sgoinfre/${USER}/francinette-light
+if [ ! -d $francinette_data ]; then
+	mkdir -p $francinette_data
 fi
 
-cp -r francinette "$HOME"
-
-cd "$HOME" || exit
-rm -rf temp_____
-
-cd "$HOME"/francinette || exit
-
-# start a venv inside francinette
-if ! python3 -m venv venv ; then
-	echo "Please make sure than you can create a python virtual environment"
-	echo 'Contact me if you have no idea how to proceed (fsoares- on slack)'
-	exit 1
+if ! ls -l /home/${USER}/sgoinfre/${USER} | grep "francinette-light" &> /dev/null; then
+	git clone https://github.com/sumon-ohid/francinette-light.git $francinette_data
 fi
 
-# activate venv
-. venv/bin/activate
+chmod +x $francinette_data/run.sh
 
-# install requirements
-if ! pip3 install -r requirements.txt ; then
-	echo 'Problem launching the installer. Contact me (fsoares- on slack)'
-	exit 1
+if ! ls -l $francinette_data | grep "francinette.tar" &> /dev/null; then
+	docker build -t francinette-light $francinette_data
+	docker image save francinette-light > $francinette_data/francinette.tar
 fi
 
-RC_FILE="$HOME/.zshrc"
-
-if [ "$(uname)" != "Darwin" ]; then
-	RC_FILE="$HOME/.bashrc"
-	if [[ -f "$HOME/.zshrc" ]]; then
-		RC_FILE="$HOME/.zshrc"
-	fi
+if ls -l $francinette_data | grep "francinette.tar" &> /dev/null; then
+	docker load < $francinette_data/francinette.tar
 fi
 
-echo "try to add alias in file: $RC_FILE"
+source $francinette_data/utils/install_zshrc.sh
 
-# set up the alias
-if ! grep "francinette=" "$RC_FILE" &> /dev/null; then
-	echo "francinette alias not present"
-	printf "\nalias francinette=%s/francinette/tester.sh\n" "$HOME" >> "$RC_FILE"
-fi
+echo -e "${BLUE}[Francinette] ${GREEN}Installation completed!\n${WHITE}Use the ${BWhite}paco${WHITE} or ${BWhite}francinette${WHITE} commands in your project folder."
 
-if ! grep "paco=" "$RC_FILE" &> /dev/null; then
-	echo "Short alias not present. Adding it"
-	printf "\nalias paco=%s/francinette/tester.sh\n" "$HOME" >> "$RC_FILE"
-fi
-
-# print help
-"$HOME"/francinette/tester.sh --help
-
-# automatically replace current shell with new one.
 exec "$SHELL"
-
-printf "\033[33m... and don't forget, \033[1;37mpaco\033[0;33m is not a replacement for your own tests! \033[0m\n"
