@@ -1,9 +1,10 @@
-FROM ubuntu:22.04
+FROM debian:latest
 
-LABEL maintainer="mmorot@student.42lyon.fr"
-LABEL version="1.0.3"
-LABEL description="francinette image 42"
-
+LABEL made by = "xicodomingues and WaRtr0"
+LABEL modified by = "msumon"
+LABEL maintainer="msumon@student.42vienna.com"
+LABEL version="1.0.0"
+LABEL description="francinette light 42vienna"
 
 RUN apt update -y
 RUN apt install git -y

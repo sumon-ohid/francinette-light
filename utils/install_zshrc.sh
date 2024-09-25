@@ -3,31 +3,53 @@
 RC_FILE="$HOME/.zshrc"
 
 if ! grep "francinette-light" "$RC_FILE" &> /dev/null; then
-printf "\nif ! systemctl status docker | grep "running" &> /dev/null; then" "$HOME" >> "$RC_FILE"
-printf "\n\t\techo \"[Francinette] Starting Docker...\"" "$HOME" >> "$RC_FILE"
-printf "\n\t\tsleep 1" "$HOME" >> "$RC_FILE"
-printf "\n\t\texec \"$SHELL\"" "$HOME" >> "$RC_FILE"
-printf "\nfi" "$HOME" >> "$RC_FILE"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        printf "\nif ! launchctl list | grep -q docker; then" >> "$RC_FILE"
+        printf "\n\t\techo \"[Francinette] Starting Docker...\"" >> "$RC_FILE"
+        printf "\n\t\topen --background -a Docker" >> "$RC_FILE"
+        printf "\n\t\tsleep 1" >> "$RC_FILE"
+        printf "\n\t\texec \"$SHELL\"" >> "$RC_FILE"
+        printf "\nfi" >> "$RC_FILE"
+    else
+        # Linux
+        printf "\nif ! systemctl status docker | grep \"running\" &> /dev/null; then" >> "$RC_FILE"
+        printf "\n\t\techo \"[Francinette] Starting Docker...\"" >> "$RC_FILE"
+        printf "\n\t\tsudo systemctl start docker" >> "$RC_FILE"
+        printf "\n\t\tsleep 1" >> "$RC_FILE"
+        printf "\n\t\texec \"$SHELL\"" >> "$RC_FILE"
+        printf "\nfi" >> "$RC_FILE"
+    fi
 
-printf "\nif ! docker image ls | grep "francinette-light" &> /dev/null; then" "$HOME" >> "$RC_FILE"
-printf "\n\t\techo \"[Francinette] Loading the docker container\"" "$HOME" >> "$RC_FILE"
-printf "\n\t\tdocker load < %s/francinette-light/francinette.tar" "$HOME" >> "$RC_FILE"
-printf "\n\t\texec \"$SHELL\"" "$HOME" >> "$RC_FILE"
-printf "\nfi" "$HOME" >> "$RC_FILE"
+    printf "\nif ! docker image ls | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
+    printf "\n\t\techo \"[Francinette] Loading the docker container\"" >> "$RC_FILE"
+    printf "\n\t\tdocker load < %s/francinette-light/francinette.tar" "$HOME" >> "$RC_FILE"
+    printf "\n\t\texec \"$SHELL\"" >> "$RC_FILE"
+    printf "\nfi" >> "$RC_FILE"
 
-printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" "$HOME" >> "$RC_FILE"
-printf "\n\tif docker run -d -i -v /home:/home -v /goinfre:/goinfre -v /sgoinfre:/sgoinfre -v %s/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" >> "$RC_FILE"
-printf "\n\t\tdocker start run-paco" "$HOME" >> "$RC_FILE"
-printf "\n\tfi" "$HOME" >> "$RC_FILE"
-printf "\nfi" "$HOME" >> "$RC_FILE"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
+        printf "\n\tif docker run -d -i -v %s:/home -v %s/sgoinfre:/sgoinfre -v %s/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" "$HOME" "$HOME" >> "$RC_FILE"
+        printf "\n\t\tdocker start run-paco" >> "$RC_FILE"
+        printf "\n\tfi" >> "$RC_FILE"
+        printf "\nfi" >> "$RC_FILE"
+    else
+        # Linux
+        printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
+        printf "\n\tif docker run -d -i -v /home:/home -v /goinfre:/goinfre -v /sgoinfre:/sgoinfre -v %s/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" >> "$RC_FILE"
+        printf "\n\t\tdocker start run-paco" >> "$RC_FILE"
+        printf "\n\tfi" >> "$RC_FILE"
+        printf "\nfi" >> "$RC_FILE"
+    fi
 fi
 
 if ! grep "francinette=" "$RC_FILE" &> /dev/null; then
-	printf "\nalias francinette=%s/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
+    printf "\nalias francinette=%s/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
 fi
 
 if ! grep "paco=" "$RC_FILE" &> /dev/null; then
-	printf "\nalias paco=%s/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
+    printf "\nalias paco=%s/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
 fi
 
 WHITE='\033[0;37m' 
