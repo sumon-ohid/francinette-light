@@ -1,9 +1,10 @@
 #!/bin/bash
 
 RC_FILE="$HOME/.zshrc"
+OS="$(uname)"
 
 if ! grep "francinette-light" "$RC_FILE" &> /dev/null; then
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$OS" == "darwin"* ]]; then
         # macOS
         printf "\nif ! launchctl list | grep -q docker; then" >> "$RC_FILE"
         printf "\n\t\techo \"[Francinette] Starting Docker...\"" >> "$RC_FILE"
@@ -27,7 +28,7 @@ if ! grep "francinette-light" "$RC_FILE" &> /dev/null; then
     printf "\n\t\texec \"$SHELL\"" >> "$RC_FILE"
     printf "\nfi" >> "$RC_FILE"
 
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ "$OS" == "darwin"* ]]; then
         # macOS
         printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
         printf "\n\tif docker run -d -i -v %s:/home -v %s/sgoinfre:/sgoinfre -v %s/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" "$HOME" "$HOME" >> "$RC_FILE"
