@@ -1,5 +1,5 @@
 
-<h1 align="center">This is a COPY of <strong>Francinette-image</strong></h1>
+<h1 align="center">This is a modified COPY of <strong>Francinette-image</strong></h1>
 I just made some small adjustment to solve limited storage issue at 42 Vienna.
 This might not in other 42 Clusters. In this version I will use sgoinfra to store the Docker image and The image will use debian instead of Ubuntu to make it ligher in size.
 
