@@ -32,6 +32,7 @@ Copy and paste the following line into your terminal to kick off the installatio
 
 ```shell
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/install.sh)"
+```
 
 ## Update:
 
@@ -39,10 +40,13 @@ Copy and paste the following line into your terminal to launch the francinette u
 
 ```shell
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/update.sh)"
+```
 
 ## Uninstall:
 
+```shell
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/uninstall.sh)"
+```
 
 ## Documentation
 
