@@ -7,6 +7,8 @@ sed -i '/systemctl status docker/,+4d' "$RC_FILE"
 sed -i '/grep francinette-light/,+4d' "$RC_FILE"
 sed -i '/docker ps/,+4d' "$RC_FILE"
 
+sed -i 'fi #francinette' "$RC_FILE"
+
 # Remove the specific block for loading the docker container
 sed -i '/if ! docker image ls | grep "francinette-light" &> \/dev\/null; then/,+4d' "$RC_FILE"
 

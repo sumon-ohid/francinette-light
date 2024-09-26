@@ -8,6 +8,7 @@ clean:
 	rm -rf /home/${USER}/goinfre/${USER}/francinette-light
 
 fclean: clean
+	./uninstall.sh
 	docker system prune -f
 
 re: fclean build
