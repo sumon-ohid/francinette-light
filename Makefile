@@ -1,7 +1,12 @@
 build:
 	./install.sh
 
-fclean:
+clean:
+	docker stop francinette-light || true
+	docker rm francinette-light || true
+	docker rmi francinette-light || true
+
+fclean: clean
 	docker system prune -f
 	docker volume prune -f
 	docker network prune -f

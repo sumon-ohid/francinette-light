@@ -13,11 +13,6 @@ OS="$(uname)"
 SGOINFRE_DIR="/home/${USER}/sgoinfre/${USER}"
 francinette_data="${SGOINFRE_DIR}/francinette-light"
 
-# Create the sgoinfre directory if it doesn't exist
-if [ ! -d "$SGOINFRE_DIR" ]; then
-    mkdir -p "$SGOINFRE_DIR"
-fi
-
 # Clone the repository if it doesn't exist in sgoinfre
 if [ ! -d "$francinette_data" ]; then
     git clone https://github.com/sumon-ohid/francinette-light.git "$francinette_data"
