@@ -4,7 +4,7 @@
 I just made some small adjustment to solve limited storage issue at 42 Vienna.
 This might not in other 42 Clusters. In this version I will use sgoinfra to store the Docker image and The image will use debian instead of Ubuntu to make it ligher in size.
 
-Thanks to **[WaRtr0](https://github.com/WaRtr0/francinette-image)**
+Thanks to **[WaRtr0](https://github.com/WaRtr0/francinette-image)** for the tool **Francinette-image**.
 
 <h1 align="center">Francinette install on <strong>42-Session-Ubuntu</strong></h1>
 
