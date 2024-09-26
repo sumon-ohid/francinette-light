@@ -10,29 +10,35 @@ NC='\033[0m'
 
 USER="$(whoami)"
 OS="$(uname)"
-SGOINFRE_DIR="home/${USER}/sgoinfre/${USER}"
-francinette_data="${SGOINFRE_DIR}"
+SGOINFRE_DIR="/home/${USER}/sgoinfre/${USER}"
+francinette_data="${SGOINFRE_DIR}/francinette-light"
 
+# Create the sgoinfre directory if it doesn't exist
+if [ ! -d "$SGOINFRE_DIR" ]; then
+    mkdir -p "$SGOINFRE_DIR"
+fi
+
+# Clone the repository if it doesn't exist in sgoinfre
 if [ ! -d "$francinette_data" ]; then
-    mkdir -p "$francinette_data"
+    git clone https://github.com/sumon-ohid/francinette-light.git "$francinette_data"
 fi
 
-if ! ls -l "$SGOINFRE_DIR" | grep "francinette-light" &> /dev/null; then
-    git clone https://github.com/sumon-ohid/francinette-light.git "$francinette_data/francinette-light"
+# Ensure the run.sh script is executable
+chmod +x "$francinette_data/run.sh"
+
+# Build the Docker image and save it as a tar file if it doesn't exist
+if [ ! -f "$francinette_data/francinette.tar" ]; then
+    docker build -t francinette-light "$francinette_data"
+    docker image save francinette-light > "$francinette_data/francinette.tar"
 fi
 
-chmod +x "$francinette_data/francinette-light/run.sh"
-
-if ! ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
-    docker build -t francinette-light "$francinette_data/francinette-light"
-    docker image save francinette-light > "$francinette_data/francinette-light/francinette.tar"
+# Load the Docker image from the tar file
+if [ -f "$francinette_data/francinette.tar" ]; then
+    docker load < "$francinette_data/francinette.tar"
 fi
 
-if ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
-    docker load < "$francinette_data/francinette-light/francinette.tar"
-fi
-
-source "$francinette_data/francinette-light/utils/install_zshrc.sh"
+# Source the Zsh configuration script
+source "$francinette_data/utils/install_zshrc.sh"
 
 echo -e "${BLUE}[Francinette] ${GREEN}Installation completed!\n${WHITE}Use the ${BWhite}paco${WHITE} or ${BWhite}francinette${WHITE} commands in your project folder."
 
