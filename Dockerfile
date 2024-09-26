@@ -1,10 +1,9 @@
-FROM debian:latest
+FROM ubuntu:22.04
 
-LABEL made_by="xicodomingues and WaRtr0"
-LABEL modified_by="msumon"
-LABEL maintainer="msumon@student.42vienna.com"
-LABEL version="1.0.0"
-LABEL description="francinette light 42vienna"
+LABEL maintainer="mmorot@student.42lyon.fr"
+LABEL version="1.0.3"
+LABEL description="francinette image 42"
+
 
 RUN apt update -y
 RUN apt install git -y
@@ -14,13 +13,12 @@ RUN apt update -y
 RUN apt upgrade -y
 RUN apt install gcc clang libpq-dev libbsd-dev libncurses-dev valgrind build-essential nasm clang ghc cmake make libxext-dev libbsd-dev libpq-dev -y
 RUN apt install python3-dev python3-pip -y
-RUN apt install python3-venv python3-wheel -y
-
-# Create and activate virtual environment, then install packages
-WORKDIR /francinette
+RUN apt install python3-dev python3-venv python3-wheel -y
+RUN pip3 install wheel
 RUN python3 -m venv venv
-RUN pip install GitPython
-RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip setuptools && pip install -r requirements.txt && pip install norminette GitPython gitpython"
-
+RUN . venv/bin/activate
+WORKDIR /francinette
+RUN pip3 install -r requirements.txt
+RUN pip3 install norminette
 RUN chmod 777 tester.sh
 CMD ["/francinette/tester.sh"]
