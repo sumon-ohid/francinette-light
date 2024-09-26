@@ -10,17 +10,7 @@ NC='\033[0m'
 
 USER="$(whoami)"
 OS="$(uname)"
-
-if [[ "$OS" == "Darwin" ]]; then
-    # macOS
-    HOME_DIR="/Users/${USER}"
-    SGOINFRE_DIR="${HOME_DIR}/sgoinfre"
-else
-    # Linux
-    HOME_DIR="/home/${USER}"
-    SGOINFRE_DIR="home/sgoinfre/${USER}"
-fi
-
+SGOINFRE_DIR="home/${USER}/sgoinfre/${USER}"
 francinette_data="${SGOINFRE_DIR}"
 
 if [ ! -d "$francinette_data" ]; then
@@ -39,7 +29,7 @@ if ! ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
 fi
 
 if ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
-    docker load < "$francinette_data/francinette.tar"
+    docker load < "$francinette_data/francinette-light/francinette.tar"
 fi
 
 source "$francinette_data/francinette-light/utils/install_zshrc.sh"

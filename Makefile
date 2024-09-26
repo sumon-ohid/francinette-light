@@ -1,3 +1,6 @@
+build:
+	./install.sh
+
 fclean:
 	docker system prune -f
 	docker volume prune -f
