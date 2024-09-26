@@ -10,7 +10,7 @@ NC='\033[0m'
 
 USER="$(whoami)"
 OS="$(uname)"
-SGOINFRE_DIR="/home/${USER}/sgoinfre/${USER}"
+SGOINFRE_DIR="/home/${USER}/goinfre/${USER}"
 francinette_data="${SGOINFRE_DIR}/francinette-light"
 
 # Clone the repository if it doesn't exist in sgoinfre
