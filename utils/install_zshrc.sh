@@ -24,21 +24,21 @@ if ! grep "francinette-light" "$RC_FILE" &> /dev/null; then
 
     printf "\nif ! docker image ls | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
     printf "\n\t\techo \"[Francinette] Loading the docker container\"" >> "$RC_FILE"
-    printf "\n\t\tdocker load < %s/home/${USER}/sgoinfre/${USER}/francinette-light/francinette.tar" "$HOME" >> "$RC_FILE"
+    printf "\n\t\tdocker load < %s/home/${USER}/goinfre/${USER}/francinette-light/francinette.tar" "$HOME" >> "$RC_FILE"
     printf "\n\t\texec \"$SHELL\"" >> "$RC_FILE"
     printf "\nfi" >> "$RC_FILE"
 
     if [[ "$OS" == "darwin"* ]]; then
         # macOS
         printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
-        printf "\n\tif docker run -d -i -v %s:/home -v %s/sgoinfre:/sgoinfre -v %%s/home/${USER}/sgoinfre/${USER}/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" "$HOME" "$HOME" >> "$RC_FILE"
+        printf "\n\tif docker run -d -i -v %s:/home -v %s/sgoinfre:/sgoinfre -v %%s/home/${USER}/goinfre/${USER}/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" "$HOME" "$HOME" >> "$RC_FILE"
         printf "\n\t\tdocker start run-paco" >> "$RC_FILE"
         printf "\n\tfi" >> "$RC_FILE"
         printf "\nfi" >> "$RC_FILE"
     else
         # Linux
         printf "\nif ! docker ps | grep \"francinette-light\" &> /dev/null; then" >> "$RC_FILE"
-        printf "\n\tif docker run -d -i -v /home:/home -v /goinfre:/goinfre -v /sgoinfre:/sgoinfre -v %s/home/${USER}/sgoinfre/${USER}/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" >> "$RC_FILE"
+        printf "\n\tif docker run -d -i -v /home:/home -v /goinfre:/goinfre -v /sgoinfre:/sgoinfre -v %s/home/${USER}/goinfre/${USER}/francinette-light/logs:/francinette/logs-t --name run-paco francinette-light /bin/bash 2>&1 | grep \"already\" &> /dev/null; then" "$HOME" >> "$RC_FILE"
         printf "\n\t\tdocker start run-paco" >> "$RC_FILE"
         printf "\n\tfi" >> "$RC_FILE"
         printf "\nfi" >> "$RC_FILE"
@@ -46,11 +46,11 @@ if ! grep "francinette-light" "$RC_FILE" &> /dev/null; then
 fi
 
 if ! grep "francinette=" "$RC_FILE" &> /dev/null; then
-    printf "\nalias francinette=%s/home/${USER}/sgoinfre/${USER}/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
+    printf "\nalias francinette=%s/home/${USER}/goinfre/${USER}/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
 fi
 
 if ! grep "paco=" "$RC_FILE" &> /dev/null; then
-    printf "\nalias paco=%s/home/${USER}/sgoinfre/${USER}/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
+    printf "\nalias paco=%s/home/${USER}/goinfre/${USER}/francinette-light/run.sh\n" "$HOME" >> "$RC_FILE"
 fi
 
 WHITE='\033[0;37m' 
