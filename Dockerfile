@@ -19,7 +19,8 @@ RUN apt install python3-venv python3-wheel -y
 # Create and activate virtual environment, then install packages
 WORKDIR /francinette
 RUN python3 -m venv venv
-RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip setuptools && pip install -r requirements.txt && pip install norminette GitPython"
+RUN pip install GitPython
+RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip setuptools && pip install -r requirements.txt && pip install norminette GitPython gitpython"
 
 RUN chmod 777 tester.sh
 CMD ["/francinette/tester.sh"]
