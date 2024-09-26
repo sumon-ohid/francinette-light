@@ -1,4 +1,3 @@
-![GitHub](https://img.shields.io/github/license/WaRtr0/francinette-light) ![GitHub top language](https://img.shields.io/github/languages/top/WaRtr0/francinette-light) ![GitHub repo size](https://img.shields.io/github/repo-size/WaRtr0/francinette-light) ![GitHub Repo stars](https://img.shields.io/github/stars/WaRtr0/francinette-light) ![GitHub repo directory count](https://img.shields.io/github/directory-file-count/WaRtr0/francinette-light) ![GitHub watchers](https://img.shields.io/github/watchers/WaRtr0/francinette-light) ![GitHub followers](https://img.shields.io/github/followers/WaRtr0) ![GitHub contributors](https://img.shields.io/github/contributors/WaRtr0/francinette-light) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/WaRtr0/francinette-light/master)
 
 <h1 align="center">This is a COPY of <strong>Francinette-image</strong></h1>
 I just made some small adjustment to solve limited storage issue at 42 Vienna.
