@@ -31,22 +31,19 @@ After installation, use the `francinette` or `paco` command inside your project'
 Copy and paste the following line into your terminal to kick off the installation, and you'll be all set to start testing your school 42 projects with Francinette in no time!
 
 ```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/WaRtr0/francinette-light/master/install.sh)"
-```
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/install.sh)"
 
 ## Update:
 
 Copy and paste the following line into your terminal to launch the francinette update
 
 ```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/WaRtr0/francinette-light/master/update.sh)"
-```
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/update.sh)"
 
 ## Uninstall:
 
-```shell
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/WaRtr0/francinette-light/master/uninstall.sh)"
-```
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/sumon-ohid/francinette-light/master/uninstall.sh)"
+
 ## Documentation
 
 I can only advise you to look at the [original Francinette documentation](https://github.com/xicodomingues/francinette/tree/master#readme) for good use of this great tool!
