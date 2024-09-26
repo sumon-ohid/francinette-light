@@ -18,7 +18,7 @@ if [[ "$OS" == "Darwin" ]]; then
 else
     # Linux
     HOME_DIR="/home/${USER}"
-    SGOINFRE_DIR="/sgoinfre/${USER}"
+    SGOINFRE_DIR="home/sgoinfre/${USER}"
 fi
 
 francinette_data="${SGOINFRE_DIR}"
@@ -34,8 +34,8 @@ fi
 chmod +x "$francinette_data/francinette-light/run.sh"
 
 if ! ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
-    docker build -t francinette-light "$francinette_data"
-    docker image save francinette-light > "$francinette_data/francinette.tar"
+    docker build -t francinette-light "$francinette_data/francinette-light"
+    docker image save francinette-light > "$francinette_data/francinette-light/francinette.tar"
 fi
 
 if ls -l "$francinette_data" | grep "francinette.tar" &> /dev/null; then
