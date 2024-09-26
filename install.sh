@@ -20,6 +20,7 @@ fi
 
 # Ensure the run.sh script is executable
 chmod +x "$francinette_data/run.sh"
+chmod +x "$francinette_data/utils/install_zshrc.sh"
 
 # Build the Docker image and save it as a tar file if it doesn't exist
 if [ ! -f "$francinette_data/francinette.tar" ]; then
