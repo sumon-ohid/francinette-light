@@ -2,19 +2,13 @@
 
 RC_FILE="$HOME/.zshrc"
 
-# Remove Docker-related lines
-sed -i '/systemctl status docker/,+4d' "$RC_FILE"
-sed -i '/grep francinette-light/,+4d' "$RC_FILE"
-sed -i '/docker ps/,+4d' "$RC_FILE"
-
-sed -i 'fi #francinette' "$RC_FILE"
-
-# Remove the specific block for loading the docker container
-sed -i '/if ! docker image ls | grep "francinette-light" &> \/dev\/null; then/,+4d' "$RC_FILE"
-
-# Remove aliases
-sed -i '/alias paco/d' "$RC_FILE"
-sed -i '/alias francinette/d' "$RC_FILE"
+# Remove the specific blocks for Docker and aliases
+sed -i '/#francinette/,+16d' "$RC_FILE"
+# sed -i '/if ! systemctl status docker | grep "running" &> \/dev\/null; then/,+5d' "$RC_FILE"
+# sed -i '/if ! docker image ls | grep "francinette-light" &> \/dev\/null; then/,+4d' "$RC_FILE"
+# sed -i '/if ! docker ps | grep "francinette-light" &> \/dev\/null; then/,+4d' "$RC_FILE"
+sed -i '/alias francinette=/d' "$RC_FILE" || true
+sed -i '/alias paco=/d' "$RC_FILE" || true
 
 WHITE='\033[0;37m' 
 BLUE='\033[0;36m'

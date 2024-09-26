@@ -13,11 +13,11 @@ OS="$(uname)"
 SGOINFRE_DIR="/home/${USER}/goinfre/${USER}"
 francinette_data="${SGOINFRE_DIR}/francinette-light"
 
-if [ $francinette_data ] then
-    rm -rf $francinette_data
-fi
+# if [ $francinette_data ]; then
+#     rm -rf $francinette_data
+# fi
 
-mkdir -p $francinette_data
+# mkdir -p $francinette_data
 
 # Clone the repository if it doesn't exist in sgoinfre
 if [ ! -d "$francinette_data" ]; then

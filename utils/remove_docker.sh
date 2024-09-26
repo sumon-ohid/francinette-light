@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if docker ps | grep "francinette-light" &> /dev/null; then
     docker stop run-paco
     docker remove run-paco
